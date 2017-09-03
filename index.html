@@ -22,13 +22,13 @@
 <script>
   const hotspots = new Hotspots(
     // 必须。选区容器
-    document.getElementById('test'),
-    // 可选。传入一个选区来初始化
-    [
-      [0.01, 0.18],
-      [0.49, 0.45]
-    ]
+    document.getElementById('test')
   )
+  // 设置一个选区
+  hotspots.set([
+    [0.01, 0.18],
+    [0.49, 0.45]
+  ])
   document.getElementById('btn').addEventListener('click', () => {
     // 获取当前选取的左上角，右下角【相对坐标】
     const area = hotspots.get()

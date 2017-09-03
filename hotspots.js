@@ -95,7 +95,8 @@ function createRounds (parent) {
 }
 
 class Hotspots {
-  constructor (container, spots) {
+  constructor (container) {
+    this._container = container
     this._containerRect = container.getBoundingClientRect()
     const mouseDownAndMove = new MouseDownAndMove(container)
     mouseDownAndMove.before('down', e => e.target.hasOwnProperty('_roundCode') || e.target !== this._rect)
@@ -135,17 +136,6 @@ class Hotspots {
       if ([1, 6].indexOf(roundCode) === -1) this._rect.style.width = Math.abs(w) + 'px'
       if ([3, 4].indexOf(roundCode) === -1) this._rect.style.height = Math.abs(h) + 'px'
     })
-    // 初始化一个选区
-    if (spots) {
-      this._rect = createRect(container)
-      const {width, height} = this._containerRect
-      const [[x1, y1], [x2, y2]] = spots
-      this._rect.style.left = x1 * width + 'px'
-      this._rect.style.top = y1 * height + 'px'
-      this._rect.style.width = (x2 - x1) * width + 'px'
-      this._rect.style.height = (y2 - y1) * height + 'px'
-      createRounds(this._rect)
-    }
   }
 
   _setPosition (type, size) {
@@ -170,6 +160,19 @@ class Hotspots {
       width: rect.width - 4,
       height: rect.height - 4
     }
+  }
+
+  set (spots) {
+    const container = this._container
+    if (this._rect) container.removeChild(this._rect)
+    this._rect = createRect(container)
+    const {width, height} = this._containerRect
+    const [[x1, y1], [x2, y2]] = spots
+    this._rect.style.left = x1 * width + 'px'
+    this._rect.style.top = y1 * height + 'px'
+    this._rect.style.width = (x2 - x1) * width + 'px'
+    this._rect.style.height = (y2 - y1) * height + 'px'
+    createRounds(this._rect)
   }
 
   get () {
