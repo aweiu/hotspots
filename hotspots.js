@@ -165,6 +165,7 @@ class Hotspots {
   set (spots) {
     const container = this._container
     if (this._rect) container.removeChild(this._rect)
+    if (!spots) return
     this._rect = createRect(container)
     const {width, height} = this._containerRect
     const [[x1, y1], [x2, y2]] = spots
