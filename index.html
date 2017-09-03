@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>热区选择,加载器</title>
+    <style>
+        #test {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+	<!-- 必须是一个非自闭合标签来做容器 -->
+    <div id="test">
+		<!-- 你可以通过改变width和height属性来任意改变图片比例，选区依然正确 -->
+        <img src="test.jpg" width="400" height="571">
+    </div>
+    <button id="btn" style="color: red;display: block;">获取坐标（打开控制台）</button>
+    <script src="hotspots.js"></script>
+    <script>
+        const hotspots = new Hotspots(
+        	// 必须。选区容器
+        	document.getElementById('test'), 
+        	// 可选。传入一个选区来初始化
+        	[
+        		[0.01, 0.18],
+        		[0.49, 0.45]
+        	]
+        )
+        document.getElementById('btn').addEventListener('click', () => {
+        	// 获取当前选取的左上角，右下角【相对坐标】
+        	const area = hotspots.get()
+        	// 返回 [[x1, y1], [x2, y2]]
+        	console.log(area)
+        })
+    </script>
+</body>
+</html>
