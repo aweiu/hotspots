@@ -26,14 +26,26 @@
   )
   // 设置一个选区
   // 如果传空 则清空当前选区
-  hotspots.set([
-    [0.01, 0.18],
-    [0.49, 0.45]
-  ])
+  // set方法会自动将选区设置为相对于当前容器大小的选区
+  hotspots.set({
+    // 相对容器宽度
+    containerHeight: 576,
+    // 相对容器高度
+    containerWidth: 400,
+    // 相对选区宽度
+    selectBoxHeight: 91,
+    // 相对选区宽度
+    selectBoxLeft: 155,
+    // 相对选区offsetLeft
+    selectBoxTop: 3,
+    // 相对选区offsetTop
+    selectBoxWidth: 42
+  })
   document.getElementById('btn').addEventListener('click', () => {
     // 获取当前选取的左上角，右下角【相对坐标】
     const area = hotspots.get()
-    // 返回 [[x1, y1], [x2, y2]]
+    // 返回 当前容器宽度，当前容器高度，当前选区宽度，当前选区高度，当前选区offsetLeft，当前选区offsetTop
+    // {containerWidth, containerHeight, selectBoxWidth, selectBoxHeight, selectBoxLeft, selectBoxTop}
     console.log(area)
   })
 </script>

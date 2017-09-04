@@ -168,19 +168,27 @@ class Hotspots {
     if (!spots) return
     this._rect = createRect(container)
     const {width, height} = this._containerRect
-    const [[x1, y1], [x2, y2]] = spots
-    this._rect.style.left = x1 * width + 'px'
-    this._rect.style.top = y1 * height + 'px'
-    this._rect.style.width = (x2 - x1) * width + 'px'
-    this._rect.style.height = (y2 - y1) * height + 'px'
+    const {selectBoxLeft, selectBoxTop, selectBoxWidth, selectBoxHeight, containerWidth, containerHeight} = spots
+    const xRate = width / containerWidth
+    const yRate = height / containerHeight
+    this._rect.style.left = selectBoxLeft * xRate + 'px'
+    this._rect.style.top = selectBoxTop * yRate + 'px'
+    this._rect.style.width = selectBoxWidth * xRate + 'px'
+    this._rect.style.height = selectBoxHeight * yRate + 'px'
     createRounds(this._rect)
   }
 
   get () {
     if (!this._rect) return
-    const {width, height} = this._containerRect
-    let {left, right, top, bottom} = this._getRect()
-    right -= 2
-    return [[(left / width).toFixed(2) / 1, (top / height).toFixed(2) / 1], [(right / width).toFixed(2) / 1, (bottom / height).toFixed(2) / 1]]
+    const {width: containerWidth, height: containerHeight} = this._containerRect
+    let {left, top, width, height} = this._getRect()
+    return {
+      containerWidth,
+      containerHeight,
+      selectBoxLeft: left,
+      selectBoxTop: top,
+      selectBoxWidth: width,
+      selectBoxHeight: height
+    }
   }
 }
