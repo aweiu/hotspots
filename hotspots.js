@@ -165,7 +165,7 @@ class Hotspots {
   set (spots) {
     const container = this._container
     if (this._rect) container.removeChild(this._rect)
-    if (!spots) return
+    if (!spots) return (this._rect = null)
     this._rect = createRect(container)
     const {width, height} = this._containerRect
     const {selectBoxLeft, selectBoxTop, selectBoxWidth, selectBoxHeight, containerWidth, containerHeight} = spots
