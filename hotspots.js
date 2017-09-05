@@ -1,6 +1,6 @@
 function createRect (parent) {
   const rect = document.createElement('div')
-  rect.style.cssText = 'position: absolute; border: 2px solid red; left: auto; top: auto; right: auto; bottom: auto;background-color: rgba(0, 0, 0, .3);'
+  rect.style.cssText = 'position: absolute; box-sizing: border-box; border: 2px solid red; left: auto; top: auto; right: auto; bottom: auto;background-color: rgba(0, 0, 0, .3);'
   const mouseDownAndMove = new MouseDownAndMove(rect)
   mouseDownAndMove.before('down', e => e.target === rect)
   mouseDownAndMove.on('move', (e, start) => {
@@ -108,9 +108,9 @@ class Hotspots {
         const rect = this._getRect()
         const isTop = roundCode > 2
         const isLeft = [2, 4, 7].indexOf(roundCode) !== -1
-        this._start = {offsetX: isLeft ? rect.left : rect.right, offsetY: isTop ? rect.top : rect.bottom}
-        const x = e.x + 5 - e.offsetX
-        const y = e.y + 5 - e.offsetY
+        this._start = {offsetX: isLeft ? rect.left + 2 : rect.right, offsetY: isTop ? rect.top + 2 : rect.bottom}
+        const x = e.x - e.offsetX + 8
+        const y = e.y - e.offsetY - 2
         this._start.x = isLeft ? x - rect.width : x + rect.width
         this._start.y = isTop ? y - rect.height : y + rect.height
       } else if (e.target !== this._rect) {
@@ -157,8 +157,8 @@ class Hotspots {
       right: this._rect.offsetLeft + rect.width,
       top: this._rect.offsetTop,
       bottom: this._rect.offsetTop + rect.height,
-      width: rect.width - 4,
-      height: rect.height - 4
+      width: rect.width,
+      height: rect.height
     }
   }
 
